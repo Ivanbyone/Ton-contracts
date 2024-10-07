@@ -1,5 +1,28 @@
 #include "imports/stdlib.fc";
 
 () recv_internal(int my_balance, int msg_value, cell in_msg_full, slice in_msg_body) impure {
+    {- 
+    Работа с основными типами данных из документации: https://docs.ton.org/develop/func/types
+    -}
+    builder b = begin_cell(); ;; объявляем тип builder
+    cell new_cell = begin_cell().end_cell(); ;; объявляем тип ячейки 
+    slice new_slice = begin_cell().end_cell().begin_parse(); ;; объявляем тип slice
+    int new_int = 2; ;; объявляем и присваиваиваем целочисленное значение
+    tuple new_tuple = empty_tuple(); ;; объявляем тип "кортеж"
+    lst = cons(0, new_int); ;; объявление списка
+    null(); ;; объявление пустого значения
+    {- 
+    булевые значения представлены в типе int (-1 - true, 0 - false) в 257 ones in binary notation
+    -}
 
+    cell data = begin_cell().store_uint(1, 32).store_ref(new_cell).end_cell();
+    slice data_slice = data.begin_parse();
+    int i = data_slice~load_uint(32);
+    cell ref = data_slice~load_ref();
+    data_slice.end_parse(); ;; проверяем все ли распарсили
+    {- 
+    В данном куске кода показана работа с записью данных в ячейку,
+    а также механизм их выноса из ячейки:
+    вытащить данные можно в таком порядке, в каком их записывали 
+    -}
 }
